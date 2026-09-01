@@ -60,7 +60,7 @@
 
   .ring{position:absolute;top:50%;left:50%;z-index:6;pointer-events:none;}
   .ring span{position:absolute;top:0;left:0;display:inline-block;width:13px;text-align:center;
-    font-family:"Plus Jakarta Sans";font-weight:600;font-size:13px;letter-spacing:.5px;color:var(--soft);transform-origin:0 0;white-space:pre;will-change:transform,opacity;}
+    font-family:"Plus Jakarta Sans";font-weight:600;font-size:13px;letter-spacing:.5px;color:var(--soft);transform-origin:0 0;white-space:pre;}
 
   .block{position:absolute;top:50%;transform:translateY(-50%);z-index:7;max-width:min(38vw,520px);opacity:0;pointer-events:none;}
   .brand{right:clamp(20px,8vw,110px);text-align:right;}
@@ -91,6 +91,30 @@
   .after .btn:hover{background:var(--ink);transform:translateY(-1px);} .after .btn:hover .ic{transform:translate(3px,-1px);}
   footer{position:relative;z-index:1;border-top:1px solid var(--hair);padding:26px clamp(20px,6vw,80px);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;color:var(--faint);font-size:.8rem;max-width:1180px;margin:0 auto;}
   footer .brand{font-family:"Quicksand";font-weight:600;color:var(--soft);}
+
+  /* ---------- MOBILE (portrait): vertical layout ---------- */
+  @media(max-width:760px){
+    .nav{gap:12px;padding:7px 7px 7px 18px;}
+    .nav .brand{font-size:1.05rem;}
+    .product{width:74vw;top:33%;}
+    #mainVid{filter:drop-shadow(0 24px 50px rgba(90,70,180,.30));}
+    .block{max-width:90vw;left:50%;right:auto;text-align:center;top:auto;}
+    .brand{top:56%;} .brand .ey{justify-content:center;}
+    .brand h1{font-size:clamp(3rem,17vw,4.4rem);}
+    .brand p{font-size:clamp(1.05rem,4.6vw,1.5rem);max-width:none;}
+    .desc{top:52%;}
+    .desc h2{font-size:clamp(1.35rem,5.6vw,1.9rem);}
+    .desc p{font-size:clamp(.92rem,3.6vw,1.05rem);}
+    .desc .specs{justify-content:center;gap:16px;}
+    .co-card{max-width:118px;} .co-card h4{font-size:.78rem;} .co-card p{font-size:.6rem;}
+    .co.up .co-line,.co.down .co-line{height:52px;}
+    .co.up .co-card{bottom:62px;} .co.down .co-card{top:62px;}
+    .after{padding:70px 20px 90px;} .after h3{font-size:2rem;}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .hint .rail::after,.glow.on{animation:none!important;}
+    .reveal,.co{transition:none!important;}
+  }
 </style>
 
 <div class="mesh"><i class="o1"></i><i class="o2"></i></div>
@@ -107,8 +131,8 @@
     <div class="product" id="product">
       <div class="glow" id="glow"></div>
       <div class="ring" id="ring"></div>
-      <video id="mainVid" muted playsinline preload="auto"><source src="assets/main.webm" type="video/webm"><source src="assets/main.mp4" type="video/mp4"></video>
-      <video id="expVid" muted playsinline preload="auto"><source src="assets/exp.webm" type="video/webm"><source src="assets/exp.mp4" type="video/mp4"></video>
+      <video id="mainVid" muted playsinline webkit-playsinline autoplay preload="auto"><source src="assets/main.webm" type="video/webm"><source src="assets/main.mp4" type="video/mp4"></video>
+      <video id="expVid" muted playsinline webkit-playsinline preload="auto"><source src="assets/exp.webm" type="video/webm"><source src="assets/exp.mp4" type="video/mp4"></video>
       <div class="callouts" id="callouts">
         <div class="co up" style="left:22%;top:34%"><div class="co-line"></div><div class="co-dot"></div><div class="co-card"><h4>Silikon Uç</h4><p>Ergonomik geçmeli, pasif yalıtım</p></div></div>
         <div class="co down" style="left:39%;top:56%"><div class="co-line"></div><div class="co-dot"></div><div class="co-card"><h4>Dinamik Sürücü</h4><p>Derin bas, berrak tiz</p></div></div>
@@ -126,7 +150,7 @@
     <div class="block desc" id="desc">
       <div class="k">modern çağın analog filtresi</div>
       <h2>Duyulmak istenmeyeni,<br>estetikle yok etme sanatı.</h2>
-      <p>Origin gürültüyü kapatmaz — onu senin kontrolüne verir. Duymak istediğini seç, gerisini estetikle sustur. Sapsız, sedefli tasarım; avucuna sığan bir sessizlik.</p>
+      <p>Origin gürültüyü kapatmaz — onu senin kontrolüne verir. Sapsız, sedefli tasarım; avucuna sığan bir sessizlik.</p>
       <div class="specs"><div><b>ANC+</b>seçici filtre</div><div><b>32s</b>kesintisiz</div><div><b>IPX5</b>dayanıklı</div></div>
     </div>
 
@@ -166,29 +190,42 @@
   function atArc(a){if(a<0||a>TOTAL)return null;var lo=0,hi=CUM.length-1;while(lo<hi){var m=(lo+hi)>>1;if(CUM[m]<a)lo=m+1;else hi=m;}
     var i=Math.max(1,lo),t=(a-CUM[i-1])/Math.max(1e-3,CUM[i]-CUM[i-1]);
     return{x:lerp(PATH[i-1][0],PATH[i][0],t),y:lerp(PATH[i-1][1],PATH[i][1],t),ang:Math.atan2(PATH[i][1]-PATH[i-1][1],PATH[i][0]-PATH[i-1][0])*180/Math.PI};}
-  function placeSnake(H){for(var j=0;j<N;j++){var pt=atArc(H-(N-1-j)*G);if(!pt){letters[j].style.opacity=0;continue;}
-    letters[j].style.opacity=1;letters[j].style.transform='translate('+pt.x+'px,'+pt.y+'px) rotate('+pt.ang+'deg) translate(-6.5px,-8px)';}}
-  function sizeR(){R=Math.max(150,mainVid.clientWidth*0.245);buildPath();}
+  function placeSnake(H){var off=-G/2;for(var j=0;j<N;j++){var pt=atArc(H-(N-1-j)*G);if(!pt){letters[j].style.opacity=0;continue;}
+    letters[j].style.opacity=1;letters[j].style.transform='translate('+pt.x+'px,'+pt.y+'px) rotate('+pt.ang+'deg) translate('+off+'px,-8px)';}}
+  function sizeR(){
+    isMobile=window.innerWidth<=760;
+    R=isMobile?Math.max(92,mainVid.clientWidth*0.34):Math.max(150,mainVid.clientWidth*0.245);
+    G=0.92*2*Math.PI*R/(N-1); Lsnake=(N-1)*G;          // scale letter spacing so text fills ~one loop
+    var fs=Math.max(9,Math.min(13.5,G-1));
+    for(var i=0;i<N;i++){letters[i].style.width=G+'px';letters[i].style.fontSize=fs+'px';}
+    buildPath();
+  }
 
   function offset(){return Math.min(window.innerWidth*0.27,380);}
   var idleRot=0,idleFrozen=0,explodeDur=5;
 
+  var isMobile=false, lastSeek=-1;
   function render(p){
-    var OX=offset(),x=0;
-    if(p<0)x=lerp(0,-OX,ss(seg(p,-1,0)));            // intro: center -> left
-    else if(p<1)x=lerp(-OX,OX,ss(seg(p,0,1)));       // scene2: left -> right
-    else x=lerp(OX,0,ss(seg(p,1,2)));                // scene3: right -> center
+    var M=isMobile, OX=M?0:offset(), x=0;
+    if(!M){
+      if(p<0)x=lerp(0,-OX,ss(seg(p,-1,0)));            // intro: center -> left
+      else if(p<1)x=lerp(-OX,OX,ss(seg(p,0,1)));       // scene2: left -> right
+      else x=lerp(OX,0,ss(seg(p,1,2)));                // scene3: right -> center
+    }
     product.style.transform='translate(-50%,-50%) translateX('+x+'px)';
 
-    // brand (scene1 right), fades out entering scene2
+    // brand (scene1), fades out entering scene2
     var bIn=ss(seg(p,-0.5,-0.02)),bOut=1-seg(p,0.1,0.45);
-    brand.style.opacity=bIn*bOut;brand.style.transform='translateY(-50%) translateX('+lerp(46,0,bIn)+'px)';
+    brand.style.opacity=bIn*bOut;
+    brand.style.transform=M?('translateX(-50%) translateY('+lerp(14,0,bIn)+'px)')
+                           :('translateY(-50%) translateX('+lerp(46,0,bIn)+'px)');
     glow.className='glow'+(p>-0.2&&p<0.28?' on':'');
 
-    // desc (scene2 left), fades out entering scene3
+    // desc (scene2), fades out entering scene3
     var dIn=ss(seg(p,0.22,0.8));
     desc.style.opacity=dIn*(1-seg(p,1.05,1.35));
-    desc.style.transform='translateY(-50%) translateX('+lerp(-46,0,dIn)+'px)';
+    desc.style.transform=M?('translateX(-50%) translateY('+lerp(-14,0,dIn)+'px)')
+                          :('translateY(-50%) translateX('+lerp(-46,0,dIn)+'px)');
 
     // snake head arc
     var restH=La+1.5*turnLen,idleC=idleRot%turnLen,H;
@@ -200,7 +237,8 @@
     // scene3: cross-fade main -> explode + scrub explode open
     var xf=ss(seg(p,1.05,1.4));
     mainVid.style.opacity=1-xf; expVid.style.opacity=xf;
-    if(p>1){var op=ss(seg(p,1.12,1.6));try{expVid.currentTime=op*(expVid.duration||explodeDur);}catch(e){}}
+    if(p>1){var t=ss(seg(p,1.12,1.6))*(expVid.duration||explodeDur);
+      if(Math.abs(t-lastSeek)>0.04){lastSeek=t;try{expVid.currentTime=t;}catch(e){}}}
     // reveal part callouts one by one after the explode has opened
     for(var ci=0;ci<coEls.length;ci++){ coEls[ci].classList.toggle('in', p > 1.6 + ci*0.09); }
 
@@ -229,6 +267,11 @@
   expVid.addEventListener('loadedmetadata',function(){explodeDur=expVid.duration||5;expVid.pause();});
   // kick off
   sizeR();render(-1);
-  var pl=mainVid.play(); if(pl&&pl.catch)pl.catch(function(){finishIntro();});
+  function tryPlay(){var q=mainVid.play();if(q&&q.catch)q.catch(function(){});}
+  tryPlay();
+  // if autoplay is blocked (some mobiles), start on first tap; skip on scroll
+  function gestureStart(){ if(!introDone&&mainVid.paused) tryPlay(); }
+  window.addEventListener('touchstart',gestureStart,{passive:true});
+  window.addEventListener('click',gestureStart);
   requestAnimationFrame(loop);
 </script>
