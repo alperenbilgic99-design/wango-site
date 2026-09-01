@@ -1,0 +1,234 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>wango Origin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--ground:#08080a;--ink:#f6f4fc;--soft:#c2bde0;--faint:#6b6682;--accent:#b3a3f7;--accent-deep:#8b7ff0;
+    --hair:rgba(255,255,255,.09);--hair2:rgba(255,255,255,.14);--chip:rgba(179,163,247,.10);--ease:cubic-bezier(.32,.72,0,1);}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:auto;}
+  body{background:var(--ground);color:var(--ink);font-family:"Plus Jakarta Sans",-apple-system,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+  ::selection{background:var(--accent);color:#0a0710;}
+
+  .mesh{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+  .mesh i{position:absolute;display:block;border-radius:50%;filter:blur(90px);}
+  .mesh .o1{width:52vw;height:52vw;left:-14vw;top:-12vw;background:radial-gradient(circle,rgba(139,127,240,.26),transparent 68%);}
+  .mesh .o2{width:46vw;height:46vw;right:-16vw;top:40vh;background:radial-gradient(circle,rgba(120,110,220,.18),transparent 66%);}
+  .grain{position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.03;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+
+  .nav-wrap{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;justify-content:center;padding:20px 16px;}
+  .nav{display:flex;align-items:center;gap:clamp(14px,3vw,32px);padding:8px 8px 8px 22px;background:rgba(14,14,20,.5);
+    border:1px solid var(--hair2);border-radius:100px;backdrop-filter:blur(20px) saturate(1.3);-webkit-backdrop-filter:blur(20px) saturate(1.3);
+    box-shadow:inset 0 1px 1px rgba(255,255,255,.10),0 12px 40px -12px rgba(0,0,0,.7);}
+  .nav .brand{font-family:"Quicksand";font-weight:700;font-size:1.18rem;letter-spacing:-.01em;}
+  .nav .links{display:flex;align-items:center;gap:24px;}
+  .nav .links a{color:var(--soft);text-decoration:none;font-size:.85rem;font-weight:500;transition:color .3s var(--ease);}
+  .nav .links a:hover{color:var(--ink);}
+  .nav .cta{display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:#0a0710;font-weight:600;font-size:.84rem;padding:9px 15px 9px 17px;border-radius:100px;}
+  .nav .cta .d{width:16px;height:16px;border-radius:50%;background:rgba(10,7,16,.14);display:grid;place-items:center;font-size:.68rem;}
+  @media(max-width:720px){.nav .links a:not(.cta){display:none;}}
+
+  /* pinned stage */
+  .scroll-space{height:560vh;position:relative;z-index:1;}
+  .stage{position:sticky;top:0;height:100vh;overflow:hidden;}
+
+  .product{position:absolute;top:50%;left:50%;width:clamp(360px,64vw,880px);z-index:5;will-change:transform;}
+  .product video{width:100%;display:block;}
+  #mainVid{position:relative;filter:drop-shadow(0 40px 80px rgba(90,70,180,.30));}
+  #expVid{position:absolute;inset:0;opacity:0;}
+  .glow{position:absolute;left:50%;top:50%;width:70%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;z-index:-1;
+    background:radial-gradient(circle,rgba(150,135,245,.45),transparent 62%);opacity:0;}
+  .glow.on{animation:pulse 2.8s var(--ease) infinite;}
+  @keyframes pulse{0%,100%{opacity:.2;transform:translate(-50%,-50%) scale(.98)}50%{opacity:.5;transform:translate(-50%,-50%) scale(1.05)}}
+
+  .callouts{position:absolute;inset:0;z-index:9;pointer-events:none;}
+  .co{position:absolute;opacity:0;transition:opacity .55s var(--ease),transform .55s var(--ease);}
+  .co.in{opacity:1;}
+  .co-dot{position:absolute;left:0;top:0;width:7px;height:7px;border-radius:50%;background:var(--accent);transform:translate(-50%,-50%);box-shadow:0 0 12px var(--accent);}
+  .co-dot::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:1px solid rgba(179,163,247,.35);}
+  .co-line{position:absolute;left:0;width:1.5px;transform:translateX(-50%);background:linear-gradient(var(--accent),rgba(179,163,247,.15));}
+  .co-card{position:absolute;left:0;transform:translateX(-50%);width:max-content;max-width:190px;text-align:center;}
+  .co-card h4{font-family:"Quicksand";font-weight:700;font-size:.95rem;color:var(--ink);letter-spacing:-.01em;}
+  .co-card p{font-size:.72rem;color:var(--soft);margin-top:4px;line-height:1.4;}
+  .co.up .co-line{bottom:0;height:76px;} .co.up .co-card{bottom:88px;}
+  .co.up{transform:translateY(8px);} .co.up.in{transform:translateY(0);}
+  .co.down .co-line{top:0;height:76px;} .co.down .co-card{top:88px;}
+  .co.down{transform:translateY(-8px);} .co.down.in{transform:translateY(0);}
+  @media(max-width:720px){.co-card{max-width:120px;} .co-card h4{font-size:.8rem;} .co-card p{font-size:.62rem;}}
+
+  .ring{position:absolute;top:50%;left:50%;z-index:6;pointer-events:none;}
+  .ring span{position:absolute;top:0;left:0;display:inline-block;width:13px;text-align:center;
+    font-family:"Plus Jakarta Sans";font-weight:600;font-size:13px;letter-spacing:.5px;color:var(--soft);transform-origin:0 0;white-space:pre;will-change:transform,opacity;}
+
+  .block{position:absolute;top:50%;transform:translateY(-50%);z-index:7;max-width:min(38vw,520px);opacity:0;pointer-events:none;}
+  .brand{right:clamp(20px,8vw,110px);text-align:right;}
+  .brand .ey{display:inline-flex;align-items:center;gap:8px;justify-content:flex-end;padding:6px 13px;border-radius:100px;background:var(--chip);border:1px solid var(--hair);font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:20px;}
+  .brand .ey .pip{width:5px;height:5px;border-radius:50%;background:var(--accent);box-shadow:0 0 9px var(--accent);}
+  .brand h1{font-family:"Quicksand";font-weight:700;font-size:clamp(3.4rem,8vw,7rem);line-height:.86;letter-spacing:-.035em;
+    background:linear-gradient(180deg,#fff,#cfc7f2 135%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+  .brand p{margin-top:16px;font-family:"Quicksand";font-weight:500;font-size:clamp(1.2rem,2.4vw,2rem);color:var(--accent);}
+  .desc{left:clamp(20px,8vw,110px);}
+  .desc .k{font-size:.62rem;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;}
+  .desc h2{font-family:"Quicksand";font-weight:700;font-size:clamp(1.7rem,3.4vw,2.9rem);line-height:1.04;margin-bottom:18px;letter-spacing:-.01em;}
+  .desc p{color:var(--soft);line-height:1.62;font-size:clamp(1rem,1.3vw,1.16rem);}
+  .desc .specs{margin-top:22px;display:flex;gap:22px;flex-wrap:wrap;}
+  .desc .specs div{font-size:.82rem;color:var(--faint);}
+  .desc .specs b{display:block;color:var(--ink);font-size:1.15rem;font-weight:700;font-family:"Quicksand";}
+
+  .hint{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);z-index:8;display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--faint);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;}
+  .hint .rail{width:22px;height:36px;border:1.5px solid var(--hair2);border-radius:100px;position:relative;}
+  .hint .rail::after{content:"";position:absolute;top:7px;left:50%;transform:translateX(-50%);width:3px;height:7px;border-radius:2px;background:var(--accent);animation:sd 1.9s var(--ease) infinite;}
+  @keyframes sd{0%{opacity:0;transform:translate(-50%,0)}30%{opacity:1}100%{opacity:0;transform:translate(-50%,13px)}}
+  .progress{position:fixed;left:0;top:0;height:2px;background:var(--accent);z-index:70;width:0;}
+
+  /* closing content after the pinned stage */
+  .after{position:relative;z-index:1;background:var(--ground);padding:clamp(70px,12vh,150px) clamp(20px,6vw,80px);max-width:1180px;margin:0 auto;text-align:center;}
+  .after h3{font-family:"Quicksand";font-weight:700;font-size:clamp(2rem,5vw,3.6rem);letter-spacing:-.02em;margin-bottom:20px;}
+  .after .btn{display:inline-flex;align-items:center;gap:12px;background:var(--accent);color:#0a0710;font-weight:600;font-size:1rem;padding:14px 14px 14px 26px;border-radius:100px;text-decoration:none;transition:transform .4s var(--ease),background .3s;}
+  .after .btn .ic{width:32px;height:32px;border-radius:50%;background:rgba(10,7,16,.16);display:grid;place-items:center;transition:transform .4s var(--ease);}
+  .after .btn:hover{background:var(--ink);transform:translateY(-1px);} .after .btn:hover .ic{transform:translate(3px,-1px);}
+  footer{position:relative;z-index:1;border-top:1px solid var(--hair);padding:26px clamp(20px,6vw,80px);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;color:var(--faint);font-size:.8rem;max-width:1180px;margin:0 auto;}
+  footer .brand{font-family:"Quicksand";font-weight:600;color:var(--soft);}
+</style>
+
+<div class="mesh"><i class="o1"></i><i class="o2"></i></div>
+<div class="grain"></div>
+<div class="progress" id="prog"></div>
+
+<div class="nav-wrap"><nav class="nav">
+  <div class="brand">wango</div>
+  <div class="links"><a href="#">Origin</a><a href="#">Hikaye</a><a href="#">Destek</a><a href="#" class="cta">Satın al <span class="d">↗</span></a></div>
+</nav></div>
+
+<div class="scroll-space">
+  <div class="stage" id="stage">
+    <div class="product" id="product">
+      <div class="glow" id="glow"></div>
+      <div class="ring" id="ring"></div>
+      <video id="mainVid" muted playsinline preload="auto"><source src="assets/main.webm" type="video/webm"><source src="assets/main.mp4" type="video/mp4"></video>
+      <video id="expVid" muted playsinline preload="auto"><source src="assets/exp.webm" type="video/webm"><source src="assets/exp.mp4" type="video/mp4"></video>
+      <div class="callouts" id="callouts">
+        <div class="co up" style="left:22%;top:34%"><div class="co-line"></div><div class="co-dot"></div><div class="co-card"><h4>Silikon Uç</h4><p>Ergonomik geçmeli, pasif yalıtım</p></div></div>
+        <div class="co down" style="left:39%;top:56%"><div class="co-line"></div><div class="co-dot"></div><div class="co-card"><h4>Dinamik Sürücü</h4><p>Derin bas, berrak tiz</p></div></div>
+        <div class="co up" style="left:60%;top:25%"><div class="co-line"></div><div class="co-dot"></div><div class="co-card"><h4>Gövde &amp; Batarya</h4><p>Dokunmatik kontrol · 8 saat</p></div></div>
+        <div class="co down" style="left:79%;top:56%"><div class="co-line"></div><div class="co-dot"></div><div class="co-card"><h4>Akustik Kapak</h4><p>Sedefli yüzey, hava kanalı</p></div></div>
+      </div>
+    </div>
+
+    <div class="block brand" id="brand">
+      <span class="ey"><span class="pip"></span>Origin WOB</span>
+      <h1>wango</h1>
+      <p>gürültünün kontrolü sende.</p>
+    </div>
+
+    <div class="block desc" id="desc">
+      <div class="k">modern çağın analog filtresi</div>
+      <h2>Duyulmak istenmeyeni,<br>estetikle yok etme sanatı.</h2>
+      <p>Origin gürültüyü kapatmaz — onu senin kontrolüne verir. Duymak istediğini seç, gerisini estetikle sustur. Sapsız, sedefli tasarım; avucuna sığan bir sessizlik.</p>
+      <div class="specs"><div><b>ANC+</b>seçici filtre</div><div><b>32s</b>kesintisiz</div><div><b>IPX5</b>dayanıklı</div></div>
+    </div>
+
+    <div class="hint" id="hint" aria-hidden="true"><span class="rail"></span>kaydır</div>
+  </div>
+</div>
+
+<section class="after">
+  <h3>Sessizliği tasarla.</h3>
+  <a href="#" class="btn">Origin'i keşfet <span class="ic">↗</span></a>
+</section>
+<footer><span class="brand">wango</span><span>Origin WOB · seçici kulaklar için</span></footer>
+
+<script>
+  var product=document.getElementById('product'),mainVid=document.getElementById('mainVid'),expVid=document.getElementById('expVid'),
+      glow=document.getElementById('glow'),ring=document.getElementById('ring'),brand=document.getElementById('brand'),
+      desc=document.getElementById('desc'),hint=document.getElementById('hint'),prog=document.getElementById('prog'),
+      coEls=document.querySelectorAll('#callouts .co');
+  function clamp(t){return t<0?0:t>1?1:t;} function seg(p,a,b){return clamp((p-a)/(b-a));} function lerp(a,b,t){return a+(b-a)*t;}
+  function ss(t){t=clamp(t);return t*t*(3-2*t);}
+
+  // snake text
+  var TXT="kaosun ortasında kendini bulmanın çelişkisi · gerçek frekansı hisset · ";
+  var chars=TXT.split(""),N=chars.length,G=13,letters=[];
+  chars.forEach(function(ch){var s=document.createElement('span');s.textContent=ch;ring.appendChild(s);letters.push(s);});
+  var Lsnake=(N-1)*G, R=200, PATH=[],CUM=[0],TOTAL=0,turnLen=0,La=0;
+  function push(x,y){var n=PATH.length;if(n)CUM.push(CUM[n-1]+Math.hypot(x-PATH[n-1][0],y-PATH[n-1][1]));PATH.push([x,y]);}
+  function buildPath(){
+    PATH=[];CUM=[0];
+    var left=Math.max(1400,window.innerWidth);
+    for(var x=-left;x<=R;x+=6)push(x,0);
+    var TURNS=2.75,step=6/R;
+    for(var th=step;th<=TURNS*2*Math.PI;th+=step)push(R*Math.cos(th),R*Math.sin(th));
+    for(var x2=6;x2<=Math.max(1500,window.innerWidth);x2+=6)push(x2,-R);
+    TOTAL=CUM[CUM.length-1];turnLen=2*Math.PI*R;La=left+R;
+  }
+  function atArc(a){if(a<0||a>TOTAL)return null;var lo=0,hi=CUM.length-1;while(lo<hi){var m=(lo+hi)>>1;if(CUM[m]<a)lo=m+1;else hi=m;}
+    var i=Math.max(1,lo),t=(a-CUM[i-1])/Math.max(1e-3,CUM[i]-CUM[i-1]);
+    return{x:lerp(PATH[i-1][0],PATH[i][0],t),y:lerp(PATH[i-1][1],PATH[i][1],t),ang:Math.atan2(PATH[i][1]-PATH[i-1][1],PATH[i][0]-PATH[i-1][0])*180/Math.PI};}
+  function placeSnake(H){for(var j=0;j<N;j++){var pt=atArc(H-(N-1-j)*G);if(!pt){letters[j].style.opacity=0;continue;}
+    letters[j].style.opacity=1;letters[j].style.transform='translate('+pt.x+'px,'+pt.y+'px) rotate('+pt.ang+'deg) translate(-6.5px,-8px)';}}
+  function sizeR(){R=Math.max(150,mainVid.clientWidth*0.245);buildPath();}
+
+  function offset(){return Math.min(window.innerWidth*0.27,380);}
+  var idleRot=0,idleFrozen=0,explodeDur=5;
+
+  function render(p){
+    var OX=offset(),x=0;
+    if(p<0)x=lerp(0,-OX,ss(seg(p,-1,0)));            // intro: center -> left
+    else if(p<1)x=lerp(-OX,OX,ss(seg(p,0,1)));       // scene2: left -> right
+    else x=lerp(OX,0,ss(seg(p,1,2)));                // scene3: right -> center
+    product.style.transform='translate(-50%,-50%) translateX('+x+'px)';
+
+    // brand (scene1 right), fades out entering scene2
+    var bIn=ss(seg(p,-0.5,-0.02)),bOut=1-seg(p,0.1,0.45);
+    brand.style.opacity=bIn*bOut;brand.style.transform='translateY(-50%) translateX('+lerp(46,0,bIn)+'px)';
+    glow.className='glow'+(p>-0.2&&p<0.28?' on':'');
+
+    // desc (scene2 left), fades out entering scene3
+    var dIn=ss(seg(p,0.22,0.8));
+    desc.style.opacity=dIn*(1-seg(p,1.05,1.35));
+    desc.style.transform='translateY(-50%) translateX('+lerp(-46,0,dIn)+'px)';
+
+    // snake head arc
+    var restH=La+1.5*turnLen,idleC=idleRot%turnLen,H;
+    if(p<=1){var e=seg(p,0.02,1.0);H=e*restH+idleC*e;idleFrozen=idleC;}
+    else{H=lerp(restH+idleFrozen,TOTAL+Lsnake,ss(seg(p,1.0,2.0)));}
+    ring.style.opacity=seg(p,0.04,0.3);
+    placeSnake(H);
+
+    // scene3: cross-fade main -> explode + scrub explode open
+    var xf=ss(seg(p,1.05,1.4));
+    mainVid.style.opacity=1-xf; expVid.style.opacity=xf;
+    if(p>1){var op=ss(seg(p,1.12,1.6));try{expVid.currentTime=op*(expVid.duration||explodeDur);}catch(e){}}
+    // reveal part callouts one by one after the explode has opened
+    for(var ci=0;ci<coEls.length;ci++){ coEls[ci].classList.toggle('in', p > 1.6 + ci*0.09); }
+
+    hint.style.opacity=(1-seg(p,-0.6,-0.1))*(introDone?(1-seg(p,0.0,0.15)):1);
+    prog.style.width=(clamp((p+1)/3)*100)+'%';
+  }
+
+  // intro tied to the main video's playback; slide-left in the last stretch
+  var introDone=false,scrolled=false;
+  function finishIntro(){introDone=true;try{mainVid.pause();mainVid.currentTime=Math.max(0,(mainVid.duration||16)-0.05);}catch(e){}}
+  function loop(){
+    requestAnimationFrame(loop);
+    idleRot+=0.55;
+    if(!introDone){
+      var d=mainVid.duration||16, vp=clamp((mainVid.currentTime||0)/d);
+      render(-1+ss(seg(vp,0.55,1.0)));               // map last 45% of video to center->left slide
+      if(mainVid.ended||vp>=0.995)finishIntro();
+    } else {
+      var max=document.querySelector('.scroll-space').offsetHeight-window.innerHeight;
+      render(clamp(window.scrollY/max)*2);
+    }
+  }
+  window.addEventListener('scroll',function(){if(!introDone&&window.scrollY>4){finishIntro();}},{passive:true});
+  window.addEventListener('resize',sizeR);
+  mainVid.addEventListener('loadedmetadata',sizeR);
+  expVid.addEventListener('loadedmetadata',function(){explodeDur=expVid.duration||5;expVid.pause();});
+  // kick off
+  sizeR();render(-1);
+  var pl=mainVid.play(); if(pl&&pl.catch)pl.catch(function(){finishIntro();});
+  requestAnimationFrame(loop);
+</script>
