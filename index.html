@@ -9,7 +9,7 @@
     --hair:rgba(255,255,255,.09);--hair2:rgba(255,255,255,.14);--chip:rgba(179,163,247,.10);--ease:cubic-bezier(.32,.72,0,1);}
   *{box-sizing:border-box;margin:0;padding:0;}
   html{scroll-behavior:auto;}
-  body{background:var(--ground);color:var(--ink);font-family:"Plus Jakarta Sans",-apple-system,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+  body{background:var(--ground);color:var(--ink);font-family:"Plus Jakarta Sans",-apple-system,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:clip;}
   ::selection{background:var(--accent);color:#0a0710;}
 
   .mesh{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
@@ -247,8 +247,13 @@
   }
 
   // intro tied to the main video's playback; slide-left in the last stretch
-  var introDone=false,scrolled=false;
-  function finishIntro(){introDone=true;try{mainVid.pause();mainVid.currentTime=Math.max(0,(mainVid.duration||16)-0.05);}catch(e){}}
+  var introDone=false, introTimer=null;
+  function finishIntro(){introDone=true;if(introTimer){clearTimeout(introTimer);introTimer=null;}try{mainVid.playbackRate=1;mainVid.pause();mainVid.currentTime=Math.max(0,(mainVid.duration||16)-0.05);}catch(e){}}
+  // Lock scrolling while the intro plays so it never breaks; a scroll intent fast-forwards it instead.
+  function introBlock(e){ if(introDone)return; e.preventDefault(); if(mainVid.playbackRate<5){try{mainVid.playbackRate=5;}catch(_){}} }
+  window.addEventListener('wheel', introBlock, {passive:false});
+  window.addEventListener('touchmove', introBlock, {passive:false});
+  window.addEventListener('keydown', function(e){ if(introDone)return; if([32,33,34,35,36,38,40].indexOf(e.keyCode)>=0){e.preventDefault();try{mainVid.playbackRate=5;}catch(_){}} });
   function loop(){
     requestAnimationFrame(loop);
     idleRot+=0.55;
@@ -261,7 +266,6 @@
       render(clamp(window.scrollY/max)*2);
     }
   }
-  window.addEventListener('scroll',function(){if(!introDone&&window.scrollY>4){finishIntro();}},{passive:true});
   window.addEventListener('resize',sizeR);
   mainVid.addEventListener('loadedmetadata',sizeR);
   expVid.addEventListener('loadedmetadata',function(){explodeDur=expVid.duration||5;expVid.pause();});
@@ -273,5 +277,6 @@
   function gestureStart(){ if(!introDone&&mainVid.paused) tryPlay(); }
   window.addEventListener('touchstart',gestureStart,{passive:true});
   window.addEventListener('click',gestureStart);
+  introTimer=setTimeout(finishIntro, 22000);   // safety: never lock forever
   requestAnimationFrame(loop);
 </script>
