@@ -115,6 +115,137 @@
     .hint .rail::after,.glow.on{animation:none!important;}
     .reveal,.co{transition:none!important;}
   }
+
+  /* ---- homepage content system (reuses hero tokens on :root) ---- */
+  .wc{position:relative;z-index:1;background:var(--ground);}
+  .wc .container{max-width:1180px;margin:0 auto;padding:0 clamp(22px,5vw,64px);}
+  .wc-sec{padding:clamp(84px,13vh,168px) 0;border-top:1px solid var(--hair);}
+  .wc-head{max-width:720px;margin:0 auto clamp(48px,7vh,88px);text-align:center;}
+  .wc-eyebrow{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:100px;background:var(--chip);border:1px solid var(--hair);font-size:.62rem;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:22px;}
+  .wc-eyebrow .pip{width:5px;height:5px;border-radius:50%;background:var(--accent);box-shadow:0 0 9px var(--accent);}
+  .wc-head h2{font-family:"Quicksand";font-weight:700;font-size:clamp(2rem,4.4vw,3.4rem);line-height:1.03;letter-spacing:-.025em;margin:0;color:var(--ink);text-wrap:balance;}
+  .wc-head h2 em{font-style:normal;color:var(--accent);}
+  .wc-head p{margin:20px auto 0;max-width:56ch;color:var(--soft);font-size:clamp(1rem,1.4vw,1.18rem);line-height:1.62;}
+
+  /* manifesto */
+  .wc-mf{padding:clamp(100px,17vh,220px) 0;text-align:center;}
+  .wc-mf .container{max-width:940px;}
+  .wc-mf h2{font-family:"Quicksand";font-weight:700;font-size:clamp(2.4rem,6vw,5rem);line-height:1.02;letter-spacing:-.03em;margin:0;
+    background:linear-gradient(180deg,#fff,#cfc7f2 140%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-wrap:balance;}
+  .wc-mf h2 em{font-style:normal;-webkit-text-fill-color:var(--accent);color:var(--accent);}
+  .wc-mf p{margin:30px auto 0;max-width:60ch;color:var(--soft);font-size:clamp(1.05rem,1.6vw,1.3rem);line-height:1.66;}
+
+  /* use-case grid (2x2 symmetric) */
+  .wc-uc-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(14px,1.6vw,22px);}
+  .wc-card{position:relative;padding:clamp(26px,3vw,40px);border-radius:22px;background:var(--shell,rgba(255,255,255,.03));border:1px solid var(--hair);
+    box-shadow:inset 0 1px 1px rgba(255,255,255,.05);transition:transform .5s var(--ease),border-color .4s var(--ease),background .4s var(--ease);min-height:230px;display:flex;flex-direction:column;}
+  .wc-card:hover{transform:translateY(-4px);border-color:var(--hair2);background:rgba(255,255,255,.045);}
+  .wc-card .ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:var(--chip);border:1px solid var(--hair);color:var(--accent);margin-bottom:auto;}
+  .wc-card .ic svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.5;}
+  .wc-card h3{font-family:"Quicksand";font-weight:700;font-size:1.32rem;letter-spacing:-.01em;margin:26px 0 8px;color:var(--ink);}
+  .wc-card p{margin:0;color:var(--soft);font-size:.96rem;line-height:1.55;}
+  .wc-card .lvl{margin-top:18px;display:flex;align-items:center;gap:10px;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);}
+  .wc-card .lvl .bar{flex:1;height:3px;border-radius:2px;background:var(--hair);overflow:hidden;}
+  .wc-card .lvl .bar i{display:block;height:100%;background:var(--accent);border-radius:2px;}
+
+  /* feature trio (3 col symmetric) */
+  .wc-trio{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2vw,30px);}
+  .wc-feat{text-align:center;padding:clamp(20px,2vw,32px);}
+  .wc-feat .ic{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;margin:0 auto 22px;background:var(--chip);border:1px solid var(--hair);color:var(--accent);}
+  .wc-feat .ic svg{width:26px;height:26px;stroke:currentColor;fill:none;stroke-width:1.5;}
+  .wc-feat h3{font-family:"Quicksand";font-weight:700;font-size:1.24rem;margin:0 0 10px;color:var(--ink);letter-spacing:-.01em;}
+  .wc-feat p{margin:0;color:var(--soft);font-size:.96rem;line-height:1.58;}
+
+  /* split (image <-> text alternating) */
+  .wc-split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,80px);align-items:center;}
+  .wc-split.rev .wc-split-media{order:2;}
+  .wc-split-media{aspect-ratio:4/5;border-radius:24px;overflow:hidden;position:relative;background:linear-gradient(160deg,#17141f,#0c0b12);border:1px solid var(--hair);box-shadow:inset 0 1px 1px rgba(255,255,255,.05);}
+  .wc-split-media img,.wc-split-media video{width:100%;height:100%;object-fit:cover;display:block;}
+  .wc-split-media .ph{position:absolute;inset:0;display:grid;place-items:center;color:var(--faint);font-size:.8rem;letter-spacing:.15em;text-transform:uppercase;}
+  .wc-split-media .glow{position:absolute;inset:0;background:radial-gradient(60% 50% at 50% 42%,rgba(139,127,240,.28),transparent 70%);}
+  .wc-split h2{font-family:"Quicksand";font-weight:700;font-size:clamp(1.9rem,3.6vw,3rem);line-height:1.04;letter-spacing:-.02em;margin:18px 0 0;color:var(--ink);}
+  .wc-split p{margin:22px 0 0;color:var(--soft);font-size:clamp(1rem,1.3vw,1.14rem);line-height:1.66;}
+  .wc-split .sig{margin-top:26px;font-family:"Quicksand";font-weight:600;color:var(--accent);font-size:1rem;}
+
+  /* stats row (4 symmetric) */
+  .wc-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(14px,2vw,28px);text-align:center;}
+  .wc-stat{padding:clamp(20px,2vw,30px) 12px;border-radius:20px;background:rgba(255,255,255,.025);border:1px solid var(--hair);}
+  .wc-stat b{display:block;font-family:"Quicksand";font-weight:700;font-size:clamp(2rem,4vw,3rem);letter-spacing:-.02em;color:var(--ink);line-height:1;
+    background:linear-gradient(180deg,#fff,#b9a8f5 150%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+  .wc-stat span{display:block;margin-top:12px;font-size:.82rem;color:var(--soft);letter-spacing:.02em;line-height:1.4;}
+
+  /* social proof */
+  .wc-proof-top{display:flex;align-items:center;justify-content:center;gap:clamp(20px,5vw,60px);flex-wrap:wrap;margin-bottom:clamp(40px,6vh,72px);text-align:center;}
+  .wc-proof-top .big{font-family:"Quicksand";font-weight:700;font-size:clamp(1.5rem,2.4vw,2.1rem);color:var(--ink);}
+  .wc-proof-top .big small{display:block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);font-weight:600;margin-top:6px;}
+  .wc-stars{color:var(--accent);letter-spacing:3px;font-size:1.1rem;}
+  .wc-reviews{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,1.6vw,22px);}
+  .wc-review{padding:clamp(22px,2.4vw,32px);border-radius:20px;background:rgba(255,255,255,.025);border:1px solid var(--hair);display:flex;flex-direction:column;}
+  .wc-review .rs{color:var(--accent);letter-spacing:2px;font-size:.9rem;margin-bottom:14px;}
+  .wc-review p{margin:0 0 auto;color:var(--ink);font-size:1rem;line-height:1.58;}
+  .wc-review .who{margin-top:22px;display:flex;align-items:center;gap:12px;}
+  .wc-review .av{width:38px;height:38px;border-radius:50%;background:linear-gradient(150deg,#a99cf3,#6d63c9);display:grid;place-items:center;font-family:"Quicksand";font-weight:700;color:#0a0710;font-size:.9rem;}
+  .wc-review .who b{font-size:.9rem;color:var(--ink);font-weight:600;font-family:"Plus Jakarta Sans";display:block;}
+  .wc-review .who span{font-size:.76rem;color:var(--faint);}
+  .wc-press{margin-top:clamp(40px,6vh,72px);display:flex;align-items:center;justify-content:center;gap:clamp(24px,5vw,56px);flex-wrap:wrap;opacity:.6;}
+  .wc-press span{font-family:"Quicksand";font-weight:600;font-size:1.1rem;color:var(--soft);letter-spacing:.02em;}
+
+  /* UGC gallery */
+  .wc-ugc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(10px,1.2vw,16px);}
+  .wc-ugc-grid .cell{aspect-ratio:1;border-radius:16px;overflow:hidden;position:relative;background:linear-gradient(150deg,#181521,#0d0c13);border:1px solid var(--hair);}
+  .wc-ugc-grid .cell img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s var(--ease);}
+  .wc-ugc-grid .cell:hover img{transform:scale(1.05);}
+  .wc-ugc-grid .cell .ph{position:absolute;inset:0;display:grid;place-items:center;color:var(--faint);font-size:.72rem;}
+
+  /* sustainability badges */
+  .wc-badges{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,1.6vw,22px);}
+  .wc-badge{display:flex;align-items:center;gap:16px;padding:clamp(20px,2vw,28px);border-radius:18px;background:rgba(255,255,255,.025);border:1px solid var(--hair);}
+  .wc-badge .ic{width:44px;height:44px;flex:none;border-radius:12px;display:grid;place-items:center;background:var(--chip);border:1px solid var(--hair);color:var(--accent);}
+  .wc-badge .ic svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.5;}
+  .wc-badge b{display:block;font-family:"Quicksand";font-weight:700;color:var(--ink);font-size:1rem;margin-bottom:3px;}
+  .wc-badge span{color:var(--soft);font-size:.86rem;line-height:1.45;}
+
+  /* final CTA */
+  .wc-cta{text-align:center;padding:clamp(110px,18vh,230px) 0;position:relative;overflow:hidden;}
+  .wc-cta::before{content:"";position:absolute;left:50%;top:50%;width:min(80vw,760px);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;
+    background:radial-gradient(circle,rgba(139,127,240,.22),transparent 66%);pointer-events:none;}
+  .wc-cta .container{position:relative;}
+  .wc-cta h2{font-family:"Quicksand";font-weight:700;font-size:clamp(2.6rem,7vw,6rem);line-height:.95;letter-spacing:-.035em;margin:0;
+    background:linear-gradient(180deg,#fff,#cfc7f2 135%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-wrap:balance;}
+  .wc-cta p{margin:26px auto 40px;max-width:44ch;color:var(--soft);font-size:clamp(1.05rem,1.5vw,1.24rem);line-height:1.6;}
+  .wc-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+  .wc-btn{display:inline-flex;align-items:center;gap:12px;border-radius:100px;font-weight:600;font-size:1.02rem;text-decoration:none;cursor:pointer;transition:transform .4s var(--ease),background .3s,border-color .3s;}
+  .wc-btn-primary{background:var(--accent);color:#0a0710;padding:15px 15px 15px 28px;border:1px solid var(--accent);}
+  .wc-btn-primary .ic{width:32px;height:32px;border-radius:50%;background:rgba(10,7,16,.16);display:grid;place-items:center;transition:transform .4s var(--ease);}
+  .wc-btn-primary:hover{background:var(--ink);border-color:var(--ink);transform:translateY(-1px);}.wc-btn-primary:hover .ic{transform:translate(3px,-1px);}
+  .wc-btn-ghost{background:transparent;color:var(--ink);padding:15px 28px;border:1px solid var(--hair2);}
+  .wc-btn-ghost:hover{border-color:var(--accent);background:var(--chip);}
+
+  /* rich footer */
+  .wc-footer{border-top:1px solid var(--hair);padding:clamp(60px,9vh,110px) 0 40px;}
+  .wc-foot-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:clamp(24px,4vw,60px);}
+  .wc-foot-brand .b{font-family:"Quicksand";font-weight:700;font-size:1.6rem;color:var(--ink);letter-spacing:-.01em;}
+  .wc-foot-brand p{margin:16px 0 0;color:var(--soft);font-size:.92rem;line-height:1.6;max-width:34ch;}
+  .wc-foot-brand .mantra{margin-top:22px;font-family:"Quicksand";font-weight:600;color:var(--accent);}
+  .wc-foot-col h4{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);font-weight:600;margin:0 0 18px;}
+  .wc-foot-col a{display:block;color:var(--soft);text-decoration:none;font-size:.92rem;margin-bottom:12px;transition:color .3s var(--ease);}
+  .wc-foot-col a:hover{color:var(--ink);}
+  .wc-foot-bottom{margin-top:clamp(40px,6vh,72px);padding-top:26px;border-top:1px solid var(--hair);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;color:var(--faint);font-size:.8rem;}
+
+  .rv{opacity:0;transform:translateY(30px);filter:blur(6px);transition:opacity .8s var(--ease),transform .8s var(--ease),filter .8s var(--ease);}
+  .rv.in{opacity:1;transform:none;filter:blur(0);}
+  @media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;filter:none;}}
+
+  @media(max-width:820px){
+    .wc-trio,.wc-stats,.wc-reviews,.wc-badges{grid-template-columns:1fr;}
+    .wc-uc-grid{grid-template-columns:1fr;}
+    .wc-split{grid-template-columns:1fr;}.wc-split.rev .wc-split-media{order:0;}
+    .wc-split-media{aspect-ratio:16/11;}
+    .wc-ugc-grid{grid-template-columns:repeat(2,1fr);}
+    .wc-foot-grid{grid-template-columns:1fr 1fr;gap:32px 24px;}
+    .wc-foot-brand{grid-column:1/-1;}
+  }
+
 </style>
 
 <div class="mesh"><i class="o1"></i><i class="o2"></i></div>
@@ -158,11 +289,168 @@
   </div>
 </div>
 
-<section class="after">
-  <h3>Sessizliği tasarla.</h3>
-  <a href="#" class="btn">Origin'i keşfet <span class="ic">↗</span></a>
-</section>
-<footer><span class="brand">wango</span><span>Origin WOB · seçici kulaklar için</span></footer>
+<div class="wc">
+  <!-- MANIFESTO -->
+  <section class="wc-mf">
+    <div class="container">
+      <span class="wc-eyebrow rv"><span class="pip"></span>manifesto</span>
+      <h2 class="rv">Sessizlik bir lüks değil,<br>bir <em>seçim</em> olmalı.</h2>
+      <p class="rv">wango sesi kapatmaz — onu senin eline verir. Gürültünün ne kadarını içeri alacağına sen karar verirsin. Modern çağın analog filtresi; kaosun ortasında kendi frekansını bulma sanatı.</p>
+    </div>
+  </section>
+
+  <!-- USE-CASE SEGMENTATION -->
+  <section class="wc-sec">
+    <div class="container">
+      <div class="wc-head rv">
+        <span class="wc-eyebrow"><span class="pip"></span>her an için</span>
+        <h2>Tek ürün, dört ayrı <em>sessizlik</em>.</h2>
+        <p>Aynı wango; anına göre farklı bir filtre. İhtiyacın hangisiyse, sesini ona göre ayarla.</p>
+      </div>
+      <div class="wc-uc-grid">
+        <article class="wc-card rv"><div class="ic"><svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div><h3>Konser</h3><p>Müziği tüm dolgunluğuyla yaşa; zararlı tepe desibelleri estetikle kısılsın. Kulakların yorulmadan sabaha kadar.</p><div class="lvl">Filtre <span class="bar"><i style="width:78%"></i></span> yüksek</div></article>
+        <article class="wc-card rv"><div class="ic"><svg viewBox="0 0 24 24"><path d="M2 12l20-8-8 20-2.5-8L2 12z"/></svg></div><h3>Uçuş & Yol</h3><p>Motor uğultusunu ve basınç gürültüsünü yumuşat, anonsları duymaya devam et. Uzun yolculuklar artık sessiz.</p><div class="lvl">Filtre <span class="bar"><i style="width:64%"></i></span> orta</div></article>
+        <article class="wc-card rv"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><h3>Odaklanma</h3><p>Açık ofis, kafe, ev... dikkat dağıtan her şeyi geri plana it. Düşüncelerinle baş başa kal, akışta kal.</p><div class="lvl">Filtre <span class="bar"><i style="width:70%"></i></span> orta-yüksek</div></article>
+        <article class="wc-card rv"><div class="ic"><svg viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg></div><h3>Uyku</h3><p>Horlama, trafik, komşu... geceyi bölen ne varsa süzülür. Sabaha dinlenmiş uyan, sedefli konforla.</p><div class="lvl">Filtre <span class="bar"><i style="width:88%"></i></span> maksimum</div></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY WANGO -->
+  <section class="wc-sec">
+    <div class="container">
+      <div class="wc-head rv">
+        <span class="wc-eyebrow"><span class="pip"></span>neden wango</span>
+        <h2>Kapatan değil, <em>süzen</em> teknoloji.</h2>
+      </div>
+      <div class="wc-trio">
+        <div class="wc-feat rv"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 6h10M4 12h16M4 18h7"/><circle cx="18" cy="6" r="2"/><circle cx="15" cy="18" r="2"/></svg></div><h3>Seçici Akustik Filtre</h3><p>Konuşmayı geçirir, gürültüyü kısar. Sesi tamamen kapatmaz; frekansları senin lehine dengeler.</p></div>
+        <div class="wc-feat rv"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 010 18M8 8c2 1 6 1 8 0"/></svg></div><h3>Sedefli, Sapsız Tasarım</h3><p>Kulakta görünmez konfor, avucunda sığan sedefli kılıf. Gündelik hayatın parçası olacak bir obje.</p></div>
+        <div class="wc-feat rv"><div class="ic"><svg viewBox="0 0 24 24"><path d="M20 7L9 18l-5-5"/></svg></div><h3>Gün Boyu Rahatlık</h3><p>Yumuşak silikon uçlar, kulağı yormayan basınç. Saatlerce tak, unut. Estetik, kesintisiz.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CRAFT / MATERIALS (split) -->
+  <section class="wc-sec">
+    <div class="container">
+      <div class="wc-split rv">
+        <div class="wc-split-media"><div class="glow"></div><video muted playsinline loop autoplay preload="metadata"><source src="assets/exp.webm" type="video/webm"><source src="assets/exp.mp4" type="video/mp4"></video></div>
+        <div>
+          <span class="wc-eyebrow"><span class="pip"></span>craft · malzeme</span>
+          <h2>Her katman,<br>bir mühendislik kararı.</h2>
+          <p>Dört ana bileşen, tek bir sessizlik için bir araya gelir: ergonomik silikon uç, akustik kanallı gövde, dinamik sürücü ve sedefli akustik kapak. Hiçbiri tesadüf değil — her biri ölçülerek, defalarca prototiplenerek yerine oturdu.</p>
+          <p class="sig">— malzemenin dürüstlüğü, tasarımın sükûneti.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CREDIBILITY NUMBERS -->
+  <section class="wc-sec">
+    <div class="container">
+      <div class="wc-head rv"><span class="wc-eyebrow"><span class="pip"></span>kanıtlanmış</span><h2>İddia değil, <em>ölçüm</em>.</h2><p>Her rakam bir tasarım disiplininin izi.</p></div>
+      <div class="wc-stats">
+        <div class="wc-stat rv"><b>120+</b><span>fiziksel prototip</span></div>
+        <div class="wc-stat rv"><b>8.000</b><span>saat kullanım testi</span></div>
+        <div class="wc-stat rv"><b>−40 dB</b><span>tepe gürültü süzme</span></div>
+        <div class="wc-stat rv"><b>6</b><span>akustik ölçüm katmanı</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOCIAL PROOF -->
+  <section class="wc-sec">
+    <div class="container">
+      <div class="wc-head rv"><span class="wc-eyebrow"><span class="pip"></span>topluluk</span><h2>Seçici kulakların <em>tercihi</em>.</h2></div>
+      <div class="wc-proof-top rv">
+        <div class="big">50.000+<small>seçici kulak</small></div>
+        <div class="big"><span class="wc-stars">★★★★★</span><small>4,9 / 5 · 2.400+ yorum</small></div>
+        <div class="big">30 gün<small>koşulsuz deneme</small></div>
+      </div>
+      <div class="wc-reviews">
+        <article class="wc-review rv"><div class="rs">★★★★★</div><p>“Konserde ilk kez kulaklarım çınlamadan eve döndüm. Müzik hâlâ dolu, ama zararlı kısmı yok. Sihir gibi.”</p><div class="who"><span class="av">E</span><div><b>Ece K.</b><span>müzik editörü</span></div></div></article>
+        <article class="wc-review rv"><div class="rs">★★★★★</div><p>“Açık ofiste odaklanmam imkânsızdı. wango’yla gün boyu takıyorum, kimse fark etmiyor, ben duymak istediğimi duyuyorum.”</p><div class="who"><span class="av">M</span><div><b>Mert A.</b><span>yazılımcı</span></div></div></article>
+        <article class="wc-review rv"><div class="rs">★★★★★</div><p>“Uçuşlarda kulak basıncı kâbusumdu. Artık iniş kalkışları hissetmiyorum bile. Bir de çok şık duruyor.”</p><div class="who"><span class="av">S</span><div><b>Selin D.</b><span>sık uçan</span></div></div></article>
+      </div>
+      <div class="wc-press rv"><span>tasarım ödülü</span><span>·</span><span>editörün seçimi</span><span>·</span><span>yılın objesi</span></div>
+    </div>
+  </section>
+
+  <!-- FOUNDER STORY (split rev) -->
+  <section class="wc-sec">
+    <div class="container">
+      <div class="wc-split rev rv">
+        <div class="wc-split-media"><div class="glow"></div><div class="ph">kurucu görseli</div></div>
+        <div>
+          <span class="wc-eyebrow"><span class="pip"></span>hikaye</span>
+          <h2>İki arkadaş.<br>Tek bir gürültü.</h2>
+          <p>Biri konserden sonra günlerce geçmeyen çınlamayla uyandı. Diğeri açık ofiste bir cümleyi bile tamamlayamıyordu. “Neden ya hepsini kapatmak ya da hepsine katlanmak zorundayız?” dedik. Arada bir şey olmalıydı — sesi silmeyen, süzen bir şey.</p>
+          <p>wango o sorunun cevabı. Kaosun ortasında kendini bulmanın çelişkisinden doğdu.</p>
+          <p class="sig">— wango kurucuları</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- UGC GALLERY -->
+  <section class="wc-sec">
+    <div class="container">
+      <div class="wc-head rv"><span class="wc-eyebrow"><span class="pip"></span>sizde wango</span><h2>Gerçek hayatta, <em>gerçek anlarda</em>.</h2><p>#wango ile paylaş, burada yer al.</p></div>
+      <div class="wc-ugc-grid">
+        <div class="cell rv"><div class="ph">@kullanıcı</div></div>
+        <div class="cell rv"><div class="ph">@kullanıcı</div></div>
+        <div class="cell rv"><div class="ph">@kullanıcı</div></div>
+        <div class="cell rv"><div class="ph">@kullanıcı</div></div>
+        <div class="cell rv"><div class="ph">@kullanıcı</div></div>
+        <div class="cell rv"><div class="ph">@kullanıcı</div></div>
+        <div class="cell rv"><div class="ph">@kullanıcı</div></div>
+        <div class="cell rv"><div class="ph">@kullanıcı</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SUSTAINABILITY -->
+  <section class="wc-sec">
+    <div class="container">
+      <div class="wc-head rv"><span class="wc-eyebrow"><span class="pip"></span>etki</span><h2>Az, ama <em>doğru</em> üretim.</h2></div>
+      <div class="wc-badges">
+        <div class="wc-badge rv"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3v18M5 10c4 0 7 2 7 6M19 10c-4 0-7 2-7 6"/></svg></div><div><b>Uzun ömür</b><span>Tek seferlik değil; yıllarca kullanılmak için tasarlandı.</span></div></div>
+        <div class="wc-badge rv"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 018-8M20 12a8 8 0 01-8 8M12 4l3 3-3 3M12 20l-3-3 3-3"/></svg></div><div><b>Geri dönüştürülebilir</b><span>Kılıf ve ambalaj, döngüye geri kazandırılabilir malzemeden.</span></div></div>
+        <div class="wc-badge rv"><div class="ic"><svg viewBox="0 0 24 24"><path d="M20 7L9 18l-5-5"/></svg></div><div><b>Gereksizden arınık</b><span>Fazla plastik yok, fazla söz yok. Sadece işe yarayan.</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA + MANTRA -->
+  <section class="wc-cta">
+    <div class="container">
+      <h2 class="rv">gürültünün<br>kontrolü sende.</h2>
+      <p class="rv">Duymak istediğini seç, gerisini estetikle sustur. Avucuna sığan bir sessizlik seni bekliyor.</p>
+      <div class="wc-actions rv">
+        <a href="#" class="wc-btn wc-btn-primary">Origin'i keşfet <span class="ic">&#8599;</span></a>
+        <a href="#" class="wc-btn wc-btn-ghost">Hikayeyi oku</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="wc-footer">
+    <div class="container">
+      <div class="wc-foot-grid">
+        <div class="wc-foot-brand">
+          <div class="b">wango</div>
+          <p>Modern çağın analog filtresi. Seçici kulaklar için, kaosun ortasında sükûnet.</p>
+          <div class="mantra">gürültünün kontrolü sende.</div>
+        </div>
+        <div class="wc-foot-col"><h4>Ürün</h4><a href="#">Origin WOB</a><a href="#">Origin Tropical</a><a href="#">Origin Obsidian</a><a href="#">Karşılaştır</a></div>
+        <div class="wc-foot-col"><h4>Marka</h4><a href="#">Hikayemiz</a><a href="#">Nasıl üretilir</a><a href="#">Etki & sürdürülebilirlik</a><a href="#">Journal</a></div>
+        <div class="wc-foot-col"><h4>Destek</h4><a href="#">SSS</a><a href="#">Kargo & iade</a><a href="#">İletişim</a><a href="#">Garanti</a></div>
+      </div>
+      <div class="wc-foot-bottom"><span>© wango — seçici kulaklar için.</span><span>Instagram · TikTok · YouTube</span></div>
+    </div>
+  </footer>
+</div>
 
 <script>
   var product=document.getElementById('product'),mainVid=document.getElementById('mainVid'),expVid=document.getElementById('expVid'),
@@ -280,3 +568,12 @@
   introTimer=setTimeout(finishIntro, 22000);   // safety: never lock forever
   requestAnimationFrame(loop);
 </script>
+<script>
+  (function(){
+    var els=[].slice.call(document.querySelectorAll('.wc .rv'));
+    if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in');});return;}
+    var io=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target);}});},{threshold:.14,rootMargin:'0px 0px -8% 0px'});
+    els.forEach(function(e){io.observe(e);});
+  })();
+</script>
+
